@@ -2,7 +2,8 @@
 
 // use error_chain::error_chain;
 use select::document::Document;
-use select::predicate::{Attr, Class, Name, Predicate};
+use select::predicate::{Class, Name};
+use serde::Serialize;
 
 // error_chain! {
 //       foreign_links {
@@ -17,7 +18,7 @@ struct Markets {
     hundred: String,
 }
 
-#[derive(Debug)]
+#[derive(Serialize, Debug)]
 struct Stock {
     epic: String,
     name: String,
@@ -32,16 +33,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         aim: "ftse-aim-100".to_string(),
         hundred: "ftse-100".to_string()
     };
-    println!("{:#?}", markets);
+
     let base_url = "http://www.hl.co.uk/shares/stock-market-summary/";
     let url = format!("{}{}", base_url, markets.aim);
-    // println!("{:#?}", url);
+
     let resp = reqwest::get(&url)
         .await?
         .text()
         .await?;
 
     let document = Document::from(resp.as_str());
+    let mut stocks = Vec::new();
 
     for node in document.find(Class("stockTable")) {
         for tbody in node.find(Name("tbody")) {
@@ -58,10 +60,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     change_percent: tds[4].to_string()
                 };
 
-                println!("{:#?}", stock);
+                stocks.push(stock);
             }
         }
     }
+
+    let json = serde_json::to_string(&stocks)?;
+    println!("{}", json);
 
     Ok(())
 }
