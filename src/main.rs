@@ -1,16 +1,6 @@
-// use std::collections::HashMap;
-
-// use error_chain::error_chain;
 use select::document::Document;
 use select::predicate::{Class, Name};
 use serde::Serialize;
-
-// error_chain! {
-//       foreign_links {
-//           ReqError(reqwest::Error);
-//           IoError(std::io::Error);
-//       }
-// }
 
 #[derive(Debug)]
 struct Markets {
@@ -22,7 +12,7 @@ struct Markets {
 struct Stock {
     epic: String,
     name: String,
-    price: String,
+    price: f32,
     change_amount: String,
     change_percent: String
 }
@@ -52,10 +42,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .map(|td| td.text())
                     .collect::<Vec<_>>();
 
+                let price = tds[2].parse::<f32>().unwrap_or(0.00).to_owned();
+
                 let stock = Stock {
                     epic: tds[0].to_string(),
                     name: tds[1].to_string(),
-                    price: tds[2].to_string(),
+                    price,
                     change_amount: tds[3].to_string(),
                     change_percent: tds[4].to_string()
                 };
