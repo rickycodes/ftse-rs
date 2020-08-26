@@ -1,54 +1,18 @@
 mod constants;
+mod parse_table;
+mod select_market;
+mod format_url;
 
 use select::document::Document;
-use select::predicate::{Class, Name};
-use constants::{
-    Stock,
-    Markets,
-    BASE_URL,
-    AIM,
-    HUNDRED,
-    FALLERS
-};
-
-fn parse_table (document: Document) -> Vec<Stock> {
-    let mut stocks = Vec::new();
-
-    for node in document.find(Class("stockTable")) {
-        for tbody in node.find(Name("tbody")) {
-            for tr in tbody.find(Name("tr")) {
-                let tds = tr.find(Name("td")).take(5)
-                    .map(|td| td.text())
-                    .collect::<Vec<_>>();
-
-                let price = tds[2].parse::<f64>().unwrap_or(0.00).to_owned();
-
-                let padded_price = format!("{:.2}", price);
-
-                let stock = Stock {
-                    epic: tds[0].to_string(),
-                    name: tds[1].to_string(),
-                    price: padded_price,
-                    change_amount: tds[3].to_string(),
-                    change_percent: tds[4].to_string()
-                };
-
-                stocks.push(stock);
-            }
-        }
-    }
-
-    stocks
-}
+use select_market::select_market;
+use format_url::format_url;
+use parse_table::parse_table;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let markets = Markets {
-        aim: AIM.to_string(),
-        hundred: HUNDRED.to_string()
-    };
+async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
+    let target = select_market("100");
 
-    let url = format!("{}{}/{}", BASE_URL, markets.aim, FALLERS);
+    let url = format_url(target);
 
     let resp = reqwest::get(&url)
         .await?
@@ -62,4 +26,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("{}", json);
 
     Ok(())
+}
+
+fn main() {
+    Some(get_market());
 }

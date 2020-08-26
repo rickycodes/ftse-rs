@@ -1,12 +1,11 @@
 use serde::Serialize;
 
-#[derive(Debug)]
 pub struct Markets {
   pub aim: String,
   pub hundred: String,
 }
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize)]
 pub struct Stock {
   pub epic: String,
   pub name: String,
@@ -21,3 +20,7 @@ pub const RISERS: &str = "risers";
 pub const FALLERS: &str = "fallers";
 pub const AIM: &str = "ftse-aim-100";
 pub const HUNDRED: &str = "ftse-100";
+pub const STOCK_TABLE: &str = "stockTable";
+pub const TBODY: &str = "tbody";
+pub const TR: &str = "tr";
+pub const TD: &str = "td";
