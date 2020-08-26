@@ -11,8 +11,8 @@ pub fn select_market(market: &str) -> String {
   };
 
   if market == "aim" {
-      return markets.aim;
+    markets.aim
   } else {
-      return markets.hundred;
+    markets.hundred
   }
 }

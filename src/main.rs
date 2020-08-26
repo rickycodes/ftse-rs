@@ -29,5 +29,8 @@ async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn main() {
-    Some(get_market());
+    match get_market() {
+        Ok(_) => {},
+        Err(err) => eprintln!("error: {}", err),
+    };
 }
