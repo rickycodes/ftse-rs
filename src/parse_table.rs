@@ -6,7 +6,8 @@ use crate::constants::{
   STOCK_TABLE,
   TBODY,
   TR,
-  TD
+  TD,
+  get_matches
 };
 
 fn parse_price(price: &str) -> f64 {
@@ -56,7 +57,17 @@ pub fn parse_table (document: Document) -> Vec<Stock> {
       }
   }
 
-  stocks
+  let matches = get_matches();
+  let limit = matches.value_of("limit");
+
+  if limit.is_some() {
+    let num = limit.unwrap();
+    let my_int = num.parse::<usize>().unwrap();
+    let new = stocks[..my_int].to_vec();
+    new
+  } else {
+    stocks
+  }
 }
 
 #[cfg(test)]

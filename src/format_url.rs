@@ -1,14 +1,12 @@
 use crate::constants::{
   BASE_URL,
   RISERS,
-  FALLERS
+  FALLERS,
+  get_matches
 };
 
-use clap::{App, load_yaml};
-
 pub fn format_url(target: String) -> String {
-  let yaml = load_yaml!("cli.yml");
-  let matches = App::from(yaml).get_matches();
+  let matches = get_matches();
   let ref_to_matches = &matches;
   let mut risers_or_fallers = "";
   if ref_to_matches.occurrences_of("risers") != 0 {
@@ -27,7 +25,7 @@ mod test {
   fn test_format_url() {
     let cats = format_url("cats".to_string());
     let dogs = format_url("dogs".to_string());
-    assert!(cats == "http://www.hl.co.uk/shares/stock-market-summary/cats/fallers".to_string());
-    assert!(dogs == "http://www.hl.co.uk/shares/stock-market-summary/dogs/fallers".to_string());
+    assert!(cats == "http://www.hl.co.uk/shares/stock-market-summary/cats/".to_string());
+    assert!(dogs == "http://www.hl.co.uk/shares/stock-market-summary/dogs/".to_string());
   }
 }
