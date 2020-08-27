@@ -3,9 +3,15 @@ use crate::select_market::select_market;
 use crate::format_url::format_url;
 use crate::parse_table::parse_table;
 
+use clap::{App, load_yaml};
+
 #[tokio::main]
 pub async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
-    let target = select_market("100");
+    let yaml = load_yaml!("cli.yml");
+    let matches = App::from(yaml).get_matches();
+    let market = matches.value_of("market").unwrap();
+
+    let target = select_market(market);
 
     let url = format_url(target);
 

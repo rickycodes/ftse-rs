@@ -1,0 +1,19 @@
+name: ftse
+version: "0.1.0"
+author: ricky miller <ricky.miller@gmail.com>
+about: scrape and filter hl.co.uk market summaries
+args:
+    - market:
+        short: m
+        long: market
+        about: Specify which market
+        takes_value: true
+        default_value: "aim"
+    - risers:
+        short: r
+        long: risers
+    - fallers:
+        short: f
+        long: fallers
+
+        
