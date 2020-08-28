@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate prettytable;
+
 mod constants;
 mod parse_table;
 mod select_market;

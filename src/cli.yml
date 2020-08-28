@@ -19,5 +19,6 @@ args:
         short: l
         long: limit
         takes_value: true
-
-        
+    - table:
+        short: t
+        long: table
