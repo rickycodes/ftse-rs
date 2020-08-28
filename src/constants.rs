@@ -28,6 +28,5 @@ pub const TD: &str = "td";
 
 pub fn get_matches() -> clap::ArgMatches {
   let yaml = load_yaml!("cli.yml");
-  let matches = App::from(yaml).get_matches();
-  matches
+  App::from(yaml).get_matches()
 }

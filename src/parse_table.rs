@@ -60,11 +60,9 @@ pub fn parse_table (document: Document) -> Vec<Stock> {
   let matches = get_matches();
   let limit = matches.value_of("limit");
 
-  if limit.is_some() {
-    let num = limit.unwrap();
+  if let Some(num) = limit {
     let my_int = num.parse::<usize>().unwrap();
-    let new = stocks[..my_int].to_vec();
-    new
+    stocks[..my_int].to_vec()
   } else {
     stocks
   }
