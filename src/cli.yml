@@ -6,19 +6,23 @@ args:
     - market:
         short: m
         long: market
-        about: Specify which market
+        about: Specify which market, either aim or 100 (ftse-100)
         takes_value: true
         default_value: "aim"
     - risers:
         short: r
         long: risers
+        about: Limit the results to risers only
     - fallers:
         short: f
         long: fallers
+        about: Limit the results to fallers only
     - limit:
         short: l
         long: limit
+        about: Limit the results to a specific number
         takes_value: true
     - table:
         short: t
         long: table
+        about: Render output as table
