@@ -1,5 +1,10 @@
 use serde::Serialize;
-use clap::{App, load_yaml};
+use clap::{App, load_yaml, ArgMatches};
+
+pub fn get_matches() -> ArgMatches {
+  let yaml = load_yaml!("cli.yml");
+  App::from(yaml).get_matches()
+}
 
 pub struct Markets {
   pub aim: String,
@@ -26,7 +31,12 @@ pub const TBODY: &str = "tbody";
 pub const TR: &str = "tr";
 pub const TD: &str = "td";
 
-pub fn get_matches() -> clap::ArgMatches {
-  let yaml = load_yaml!("cli.yml");
-  App::from(yaml).get_matches()
-}
+pub const TABLE: &str = "table";
+pub const MARKET: &str = "market";
+pub const LIMIT: &str = "limit";
+
+pub const EPIC: &str = "EPIC";
+pub const NAME: &str = "NAME";
+pub const CHANGE: &str = "CHANGE";
+pub const CHANGE_PERCENT: &str = "CHANGE %";
+pub const PRICE: &str = "PRICE";

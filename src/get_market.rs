@@ -2,15 +2,18 @@ use select::document::Document;
 use crate::select_market::select_market;
 use crate::format_url::format_url;
 use crate::parse_table::parse_table;
+use crate::build_table::build_table;
 
 use crate::constants::{
+    MARKET,
+    TABLE,
     get_matches
 };
 
 #[tokio::main]
 pub async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
     let matches = get_matches();
-    let market = matches.value_of("market").unwrap();
+    let market = matches.value_of(MARKET).unwrap();
 
     let target = select_market(market);
 
@@ -25,17 +28,8 @@ pub async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
     let stocks = parse_table(document);
 
     let ref_to_matches = &matches;
-    if ref_to_matches.occurrences_of("table") != 0 {
-        let mut table = table!(["EPIC", "NAME", "Change", "Change %", "Price"]);
-        for stock in &stocks {
-            table.add_row(row![
-                stock.epic,
-                stock.name,
-                stock.change_amount,
-                stock.change_percent,
-                stock.price
-            ]);
-        }
+    if ref_to_matches.occurrences_of(TABLE) != 0 {
+        let table = build_table(stocks);
         table.printstd();
     } else {
         let json = serde_json::to_string(&stocks)?;

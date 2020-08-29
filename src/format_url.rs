@@ -9,9 +9,9 @@ pub fn format_url(target: String) -> String {
   let matches = get_matches();
   let ref_to_matches = &matches;
   let mut risers_or_fallers = "";
-  if ref_to_matches.occurrences_of("risers") != 0 {
+  if ref_to_matches.occurrences_of(RISERS) != 0 {
     risers_or_fallers = RISERS
-  } else if ref_to_matches.occurrences_of("fallers") != 0 {
+  } else if ref_to_matches.occurrences_of(FALLERS) != 0 {
     risers_or_fallers = FALLERS
   }
   return format!("{}{}/{}", BASE_URL, target, risers_or_fallers);

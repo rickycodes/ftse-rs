@@ -7,6 +7,7 @@ use crate::constants::{
   TBODY,
   TR,
   TD,
+  LIMIT,
   get_matches
 };
 
@@ -58,7 +59,7 @@ pub fn parse_table (document: Document) -> Vec<Stock> {
   }
 
   let matches = get_matches();
-  let limit = matches.value_of("limit");
+  let limit = matches.value_of(LIMIT);
 
   if let Some(num) = limit {
     let my_int = num.parse::<usize>().unwrap();

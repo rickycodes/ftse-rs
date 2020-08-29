@@ -3,6 +3,7 @@ extern crate prettytable;
 
 mod constants;
 mod parse_table;
+mod build_table;
 mod select_market;
 mod format_url;
 mod get_market;
