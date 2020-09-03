@@ -1,4 +1,4 @@
-## ftse-rs
+## ftse-rs [![Build Status](https://travis-ci.org/rickycodes/ftse-rs.svg?branch=master)](https://travis-ci.org/rickycodes/ftse-rs)
 
 scrape and filter hl.co.uk market summaries
 
