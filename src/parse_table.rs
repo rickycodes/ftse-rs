@@ -8,6 +8,7 @@ use crate::constants::{
   TR,
   TD,
   LIMIT,
+  AMOUNT,
   get_matches
 };
 
@@ -30,8 +31,7 @@ fn parse_stock_from_tds(tds: Vec<String>, padded_price: String) -> Stock {
 }
 
 fn collect_tds(tr: Node) -> Vec<String> {
-  let amount = 5;
-  tr.find(Name(TD)).take(amount)
+  tr.find(Name(TD)).take(AMOUNT)
     .map(|td| td.text())
     .collect::<Vec<_>>()
 }
