@@ -27,8 +27,7 @@ pub async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
     let document = Document::from(resp.as_str());
     let stocks = parse_table(document);
 
-    let ref_to_matches = &matches;
-    if ref_to_matches.occurrences_of(TABLE) != 0 {
+    if matches.occurrences_of(TABLE) != 0 {
         let table = build_table(stocks);
         table.printstd();
     } else {
