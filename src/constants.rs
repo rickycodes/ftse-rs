@@ -48,5 +48,8 @@ pub const CHANGE: &str = "CHANGE";
 pub const CHANGE_PERCENT: &str = "CHANGE %";
 pub const PRICE: &str = "PRICE";
 
+pub const PLUS: &str = "+";
+pub const MINUS: &str = "-";
+
 /* td amount */
 pub const AMOUNT: usize = 5;

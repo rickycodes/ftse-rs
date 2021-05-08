@@ -58,6 +58,8 @@ pub fn parse_table (document: Document) -> Vec<Stock> {
       }
   }
 
+  // TODO: account for when there are no risers or fallers?
+
   let matches = get_matches();
   let limit = matches.value_of(LIMIT);
 

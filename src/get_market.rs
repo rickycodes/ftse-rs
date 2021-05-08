@@ -24,6 +24,8 @@ pub async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
         .text()
         .await?;
 
+    // println!("{:?}", resp);
+
     let document = Document::from(resp.as_str());
     let stocks = parse_table(document);
 
