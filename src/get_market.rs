@@ -1,51 +1,29 @@
-use select::document::Document;
-use crate::select_market::select_market;
-use crate::format_url::format_url;
-use crate::parse_table::parse_table;
-use crate::build_table::build_table;
-
 use crate::constants::{
-    MARKET,
-    TABLE,
-    get_matches,
-    RISERS,
-    FALLERS
+  Markets,
+  AIM,
+  HUNDRED
 };
 
-#[tokio::main]
-pub async fn get_market() -> Result<(), Box<dyn std::error::Error>> {
-    let matches = get_matches();
-    let market = matches.value_of(MARKET).unwrap();
+pub fn get_market(market: &str) -> String {
+  let markets = Markets {
+      aim: AIM.to_string(),
+      hundred: HUNDRED.to_string()
+  };
 
-    let target = select_market(market);
+  if market == "aim" {
+    markets.aim
+  } else {
+    markets.hundred
+  }
+}
 
-    let t_clone = target.clone();
-    let url = format_url(target);
+#[cfg(test)]
+mod test {
+  use super::*;
 
-    let resp = reqwest::get(&url)
-        .await?
-        .text()
-        .await?;
-
-    let document = Document::from(resp.as_str());
-    let stocks = parse_table(document);
-
-    if matches.occurrences_of(TABLE) != 0 {
-        let table = build_table(stocks);
-        table.printstd();
-        print!("{}: ", t_clone.replace("-", " ").to_uppercase());
-        if matches.occurrences_of(RISERS) != 0 {
-            println!("TOP 20 {}", RISERS.to_uppercase());
-        } else if matches.occurrences_of(FALLERS) != 0 {
-            println!("TOP 20 {}", FALLERS.to_uppercase());
-        }
-
-        println!("DATA FETCHED FROM: ");
-        println!("{}", url);
-    } else {
-        let json = serde_json::to_string(&stocks)?;
-        println!("{}", json);
-    }
-
-    Ok(())
+  #[test]
+  fn test_get_market() {
+    assert!(get_market("100") == HUNDRED.to_string());
+    assert!(get_market("aim") == AIM.to_string());
+  }
 }

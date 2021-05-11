@@ -40,6 +40,7 @@ pub const TD: &str = "td";
 pub const TABLE: &str = "table";
 pub const MARKET: &str = "market";
 pub const LIMIT: &str = "limit";
+pub const VERBOSE: &str = "verbose";
 
 /* table headers */
 pub const EPIC: &str = "EPIC";

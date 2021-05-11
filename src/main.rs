@@ -4,14 +4,14 @@ extern crate prettytable;
 mod constants;
 mod parse_table;
 mod build_table;
-mod select_market;
-mod format_url;
+mod fetch_market;
+mod get_url;
 mod get_market;
 
-use get_market::get_market;
+use fetch_market::fetch_market;
 
 fn main() {
-    match get_market() {
+    match fetch_market() {
         Ok(_) => {},
         Err(err) => eprintln!("error: {}", err),
     };
