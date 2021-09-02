@@ -4,19 +4,24 @@ use ansi_term::Colour::{Red, Green, White};
 use crate::constants::{
   Stock,
   EPIC,
+  get_matches,
   NAME,
   CHANGE,
   CHANGE_PERCENT,
+  COLOR,
   PRICE,
   PLUS,
   MINUS
 };
 
 pub fn paint_row(stock: &Stock) -> Row {
+  let matches = get_matches();
+  let contains_color = matches.occurrences_of(COLOR) != 0;
+
   let first = &stock.change_amount[0..1];
   let color = match first {
-    PLUS => Green,
-    MINUS => Red,
+    PLUS => if contains_color { Green } else { White },
+    MINUS => if contains_color { Red } else { White },
     _ => White
   };
 

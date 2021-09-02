@@ -30,3 +30,7 @@ args:
         short: v
         long: verbose
         about: Render output as table
+    - color:
+        short: c
+        long: color
+        about: Color output (only applies to table)
