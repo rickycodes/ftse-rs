@@ -13,18 +13,18 @@ use crate::constants::{
 };
 
 fn parse_price(price: &str) -> f64 {
-  price.parse::<f64>().unwrap_or(0.00).to_owned()
+  price.replace(",", "").parse::<f64>().unwrap_or(0.00).to_owned()
 }
 
 fn pad_price(price: f64) -> String {
-  format!("{:.2}", price)
+  format!("{:.2}p", price)
 }
 
-fn parse_stock_from_tds(tds: Vec<String>, padded_price: String) -> Stock {
+fn parse_stock_from_tds(tds: Vec<String>) -> Stock {
   Stock {
     epic: tds[0].to_string(),
     name: tds[1].to_string(),
-    price: padded_price,
+    price: pad_price(parse_price(&tds[2])),
     change_amount: tds[3].to_string(),
     change_percent: tds[4].to_string()
   }
@@ -38,13 +38,8 @@ fn collect_tds(tr: Node) -> Vec<String> {
 
 fn collect_stock(tr: Node) -> Stock {
   let tds = collect_tds(tr);
-  let price = parse_price(&tds[2]);
-  let padded_price = pad_price(price);
 
-  parse_stock_from_tds(
-    tds,
-    padded_price
-  )
+  parse_stock_from_tds(tds)
 }
 
 pub fn parse_table (document: Document) -> Vec<Stock> {
