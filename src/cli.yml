@@ -29,8 +29,8 @@ args:
     - verbose:
         short: v
         long: verbose
-        about: Render output as table
+        about: render additional metadata (works only with --table)
     - color:
         short: c
         long: color
-        about: Color output (only applies to table)
+        about: Color output (works only with --table)
